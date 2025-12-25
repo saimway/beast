@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const secretInput = document.getElementById('secret-input');
     const encodedOutput = document.getElementById('encoded-output');
     const copyBtn = document.getElementById('copy-btn');
+    const copyAiBtn = document.getElementById('copy-ai-btn');
     const decodeInput = document.getElementById('decode-input');
     const decodedOutput = document.getElementById('decoded-output');
 
@@ -123,6 +124,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('Failed to copy text: ', err);
                 // Fallback
                 document.execCommand('copy');
+            });
+        }
+    });
+
+    copyAiBtn.addEventListener('click', () => {
+        if (encodedOutput.value) {
+            const prompt = `I have hidden a binary message inside the following carrier word using Zero-Width characters.
+Zero-Width Space (\\u200B) represents '0' and Zero-Width Non-Joiner (\\u200C) represents '1'.
+The binary encoding is 8-bit ASCII.
+
+The word is: "${encodedOutput.value}"
+
+Please decode the hidden message.`;
+
+            navigator.clipboard.writeText(prompt).then(() => {
+                const originalText = copyAiBtn.innerText;
+                copyAiBtn.innerText = 'Prompt Copied!';
+                setTimeout(() => {
+                    copyAiBtn.innerText = originalText;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+                alert("Failed to copy to clipboard");
             });
         }
     });

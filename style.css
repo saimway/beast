@@ -6,6 +6,8 @@
     --accent-hover: #00cc33;
     --border-color: #333;
     --font-mono: 'Roboto Mono', monospace;
+    --font-display: 'Orbitron', sans-serif;
+    --ai-btn-color: #00bfff; /* Deep Sky Blue */
 }
 
 body {
@@ -41,6 +43,23 @@ header h1 {
     letter-spacing: 2px;
     margin: 0;
     font-size: 2rem;
+}
+
+.beast-title {
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+    background: linear-gradient(90deg, #00ff41, #008f24);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.tool-suffix {
+    color: #fff;
+    -webkit-text-fill-color: #fff;
+    font-size: 0.8em;
+    margin-left: 10px;
+    opacity: 0.8;
 }
 
 header p {
@@ -152,6 +171,19 @@ button:hover {
 
 button:active {
     transform: translateY(1px);
+}
+
+.secondary-btn {
+    width: 100%;
+    margin-top: 0.8rem;
+    border-color: var(--ai-btn-color);
+    color: var(--ai-btn-color);
+    font-size: 0.9rem;
+}
+
+.secondary-btn:hover {
+    background-color: var(--ai-btn-color);
+    color: var(--bg-color);
 }
 
 footer {
