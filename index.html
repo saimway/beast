@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero-Width Steganography</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Zero-Width Steganography</h1>
+            <p>Hide secrets in plain sight.</p>
+        </header>
+
+        <main>
+            <section class="panel encode-panel">
+                <h2><span class="icon">🔒</span> Encode</h2>
+                <div class="input-group">
+                    <label for="carrier-input">Carrier Word</label>
+                    <input type="text" id="carrier-input" placeholder="e.g. Hello (Leave empty for invisible only)">
+                </div>
+                <div class="input-group">
+                    <label for="secret-input">Secret Message</label>
+                    <textarea id="secret-input" placeholder="e.g. Meet at 5"></textarea>
+                </div>
+                <div class="output-group">
+                    <label>Encoded Result</label>
+                    <div class="result-box">
+                        <input type="text" id="encoded-output" readonly placeholder="Result will appear here...">
+                        <button id="copy-btn">Copy</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel decode-panel">
+                <h2><span class="icon">🔓</span> Decode</h2>
+                <div class="input-group">
+                    <label for="decode-input">Paste Text Here</label>
+                    <textarea id="decode-input" placeholder="Paste the text containing the hidden message..."></textarea>
+                </div>
+                <div class="output-group">
+                    <label>Decoded Message</label>
+                    <div class="result-box">
+                        <textarea id="decoded-output" readonly placeholder="Hidden message will be revealed here..."></textarea>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Powered by \u200B & \u200C</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
