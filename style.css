@@ -173,19 +173,6 @@ button:active {
     transform: translateY(1px);
 }
 
-.secondary-btn {
-    width: 100%;
-    margin-top: 0.8rem;
-    border-color: var(--ai-btn-color);
-    color: var(--ai-btn-color);
-    font-size: 0.9rem;
-}
-
-.secondary-btn:hover {
-    background-color: var(--ai-btn-color);
-    color: var(--bg-color);
-}
-
 footer {
     text-align: center;
     color: #555;

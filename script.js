@@ -5,13 +5,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const secretInput = document.getElementById('secret-input');
     const encodedOutput = document.getElementById('encoded-output');
     const copyBtn = document.getElementById('copy-btn');
-    const copyAiBtn = document.getElementById('copy-ai-btn');
     const decodeInput = document.getElementById('decode-input');
     const decodedOutput = document.getElementById('decoded-output');
 
     // Constants
     const ZERO_WIDTH_SPACE = '\u200B'; // Represents 0
     const ZERO_WIDTH_NON_JOINER = '\u200C'; // Represents 1
+    const BOM_MARKER = '\uFEFF'; // Zero Width No-Break Space (Header)
 
     // Encoding Logic
     function textToBinary(text) {
@@ -46,15 +46,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const binary = textToBinary(secret);
         const hiddenString = binaryToZeroWidth(binary);
 
+        // Prepend BOM to the final string. This helps systems identify "weird" unicode usage
+        // but remains invisible. It might increase AI likelihood of inspecting the string.
+        let result = '';
+
         if (carrier.length > 0) {
             // Inject after the first character
             const firstChar = carrier.charAt(0);
             const rest = carrier.slice(1);
-            encodedOutput.value = firstChar + hiddenString + rest;
+            result = BOM_MARKER + firstChar + hiddenString + rest;
         } else {
-            // If empty (only possible via Custom), just return the hidden string
-            encodedOutput.value = hiddenString;
+            result = BOM_MARKER + hiddenString;
         }
+
+        encodedOutput.value = result;
     }
 
     // Decoding Logic
@@ -124,29 +129,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('Failed to copy text: ', err);
                 // Fallback
                 document.execCommand('copy');
-            });
-        }
-    });
-
-    copyAiBtn.addEventListener('click', () => {
-        if (encodedOutput.value) {
-            const prompt = `I have hidden a binary message inside the following carrier word using Zero-Width characters.
-Zero-Width Space (\\u200B) represents '0' and Zero-Width Non-Joiner (\\u200C) represents '1'.
-The binary encoding is 8-bit ASCII.
-
-The word is: "${encodedOutput.value}"
-
-Please decode the hidden message.`;
-
-            navigator.clipboard.writeText(prompt).then(() => {
-                const originalText = copyAiBtn.innerText;
-                copyAiBtn.innerText = 'Prompt Copied!';
-                setTimeout(() => {
-                    copyAiBtn.innerText = originalText;
-                }, 2000);
-            }).catch(err => {
-                console.error('Failed to copy text: ', err);
-                alert("Failed to copy to clipboard");
             });
         }
     });
