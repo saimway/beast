@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // DOM Elements
-    const carrierInput = document.getElementById('carrier-input');
+    const carrierSelect = document.getElementById('carrier-select');
+    const customCarrierInput = document.getElementById('custom-carrier-input');
     const secretInput = document.getElementById('secret-input');
     const encodedOutput = document.getElementById('encoded-output');
     const copyBtn = document.getElementById('copy-btn');
@@ -25,8 +26,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }).join('');
     }
 
+    function getCarrierWord() {
+        if (carrierSelect.value === 'custom') {
+            return customCarrierInput.value;
+        }
+        return carrierSelect.value;
+    }
+
     function updateEncodedOutput() {
-        const carrier = carrierInput.value;
+        const carrier = getCarrierWord();
         const secret = secretInput.value;
 
         if (!secret) {
@@ -43,13 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const rest = carrier.slice(1);
             encodedOutput.value = firstChar + hiddenString + rest;
         } else {
-            // If empty, just return the hidden string (effectively invisible)
-            // Or technically, following the "inside a single invisible space" idea?
-            // The prompt says: "if the carrier word is empty, it hides the message inside a single invisible space character"
-            // So we might prepend a space? Or just return the zero-width sequence.
-            // A zero-width sequence *is* invisible. But maybe to make it copyable/selectable easily if it's empty?
-            // Actually, if the output is just zero-width chars, it's very hard to select.
-            // Let's stick to the simplest interpretation: Carrier (empty) + Hidden.
+            // If empty (only possible via Custom), just return the hidden string
             encodedOutput.value = hiddenString;
         }
     }
@@ -91,7 +93,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Event Listeners
-    carrierInput.addEventListener('input', updateEncodedOutput);
+    carrierSelect.addEventListener('change', () => {
+        if (carrierSelect.value === 'custom') {
+            customCarrierInput.classList.remove('hidden');
+            customCarrierInput.focus();
+        } else {
+            customCarrierInput.classList.add('hidden');
+        }
+        updateEncodedOutput();
+    });
+
+    customCarrierInput.addEventListener('input', updateEncodedOutput);
     secretInput.addEventListener('input', updateEncodedOutput);
     decodeInput.addEventListener('input', updateDecodedOutput);
 
@@ -115,6 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Initial call to handle any pre-filled values (browser autocomplete)
+    // Initial call to handle any pre-filled values
     updateEncodedOutput();
 });

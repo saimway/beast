@@ -18,8 +18,20 @@
             <section class="panel encode-panel">
                 <h2><span class="icon">🔒</span> Encode</h2>
                 <div class="input-group">
-                    <label for="carrier-input">Carrier Word</label>
-                    <input type="text" id="carrier-input" placeholder="e.g. Hello (Leave empty for invisible only)">
+                    <label for="carrier-select">Carrier Word</label>
+                    <select id="carrier-select">
+                        <option value="HAHA">HAHA</option>
+                        <option value="fr">fr</option>
+                        <option value="lmao">lmao</option>
+                        <option value="lol">lol</option>
+                        <option value="bet">bet</option>
+                        <option value="bruh">bruh</option>
+                        <option value="cap">cap</option>
+                        <option value="sure">sure</option>
+                        <option value="ok">ok</option>
+                        <option value="custom">Custom...</option>
+                    </select>
+                    <input type="text" id="custom-carrier-input" class="hidden" placeholder="Type custom carrier word..." style="margin-top: 0.5rem;">
                 </div>
                 <div class="input-group">
                     <label for="secret-input">Secret Message</label>
